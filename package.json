@@ -4,7 +4,7 @@
   "description": "## Objetivo",
   "main": "index.js",
   "scripts": {
-    "start": "index.js",
+    "start": "node index.js",
     "nodemon": "nodemon index.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/stit/talent-data-api-test#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-rescue": "^1.1.31",
     "joi": "^17.4.2",
@@ -26,6 +27,10 @@
     "rescue": "^6.0.4"
   },
   "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-trybe-backend": "^1.0.4",
+    "eslint-plugin-sonarjs": "^0.10.0",
     "nodemon": "^2.0.12"
   }
 }

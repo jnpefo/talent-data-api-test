@@ -1,5 +1,6 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const findOne = require('../model');
+const { findOneEmail } = require('../model');
 const validLogin = require('./validator');
 
 const jwtConfig = {
@@ -9,17 +10,20 @@ const jwtConfig = {
 
 const loginServices = async (data) => {
   const { error } = validLogin.validate(data);
-  console.log("entrei aqui2");
   if (error) return { status: 400, message: error.details[0].message };
 
-  const { email } = data;
-  const emailExists = findOne(email);
-  if (emailExists === null) return { status: 400, message: 'Invalid fields' };
-  
+  const { email, password } = data;
+
+  const existUser = await findOneEmail(email);
+
+  if (existUser === undefined) return { status: 400, message: 'Invalid fields' };
+  if (existUser.email !== email) return { status: 400, message: 'Invalid fields' };
+  if (existUser.password !== password) return { status: 400, message: 'Invalid fields' };
+
   const payload = {
-    _id: emailExists.userId,
+    _id: existUser.userId,
     email: data.email,
-    role: emailExists.roles[0],
+    role: existUser.roles[0],
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, jwtConfig);
