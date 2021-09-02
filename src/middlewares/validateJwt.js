@@ -1,18 +1,19 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const { findOneEmail } = require('../model');
-require('dotenv').config();
 
 const msg = 'Expired or invalid token';
 const msg1 = 'Token not found';
 
 const validateJwt = async (req, res, next) => {
-  const token = req.headers.authorization;
+  const isToken = req.headers.authorization;
+
+  const token = isToken.split(' ');
   
-  if (!token) return res.status(401).json({ message: msg1 });
+  if (!token || token.length !== 2) return res.status(401).json({ message: msg1 });
   
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(token);
+    const decoded = jwt.verify(token[1], process.env.JWT_SECRET);
     const { email } = decoded;
 
     const existUser = await findOneEmail(email);

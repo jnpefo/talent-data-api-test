@@ -1,0 +1,4 @@
+{"name":"Handcrafted Plastic Keyboard","department":"Music","material":"Soft","price":"173.00","tags":["Practical","Small","Licensed","Practical"]}
+{"name":"Gorgeous Plastic Chips","department":"Health","material":"Cotton","price":"969.00","tags":["Gorgeous","Incredible","Handcrafted"]}
+{"name":"Generic Fresh Shirt","department":"Tools","material":"Rubber","price":"114.00","tags":["Incredible","Handmade"]}
+

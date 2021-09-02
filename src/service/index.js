@@ -4,7 +4,7 @@ const { findOneEmail } = require('../model');
 const validLogin = require('./validator');
 
 const jwtConfig = {
-  expiresIn: '1h',
+  expiresIn: '1d',
   algorithm: 'HS256',
 };
 
