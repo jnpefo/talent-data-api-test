@@ -3,32 +3,28 @@ const { once } = require('events');
 const { createReadStream } = require('fs');
 const { createInterface } = require('readline');
 
-const getProctudModel = (name) => {
+const getProctudModel = async (name) => {
   const products = [];
   let count = 0;
-  (async function processLineByLine() {
-    try {
-      const rl = createInterface({
-        input: createReadStream('./fixtures/teste.txt'),
-        crlfDelay: Infinity
-      });
+  try {
+    const rl = createInterface({
+      input: createReadStream('./fixtures/products.txt'),
+      crlfDelay: Infinity
+    });
 
-      rl.on('line', (line) => {
-        const a = JSON.parse(line);
-        if (a.department === name){
-          count += 1;
-          products.push(a);
-          // console.log(products);
-        };
-      });
-      
-      await once(rl, 'close');
-      
-    } catch (err) {
-      console.error(err);
-    }
-  })();
-  // console.log(products);
+    rl.on('line', (line) => {
+      const a = JSON.parse(line);
+      if (a.department === name){
+        count += 1;
+        products.push(a);
+      };
+    });
+    
+    await once(rl, 'close');
+    
+  } catch (err) {
+    console.error(err);
+  }
   return { 'total': count, products };
 };
 
