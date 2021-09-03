@@ -19,12 +19,9 @@ const validateJwt = async (req, res, next) => {
     const existUser = await findOneEmail(email);
     
     if (!existUser) return res.status( 400).json({ message: msg });
-    
-    const { userId } = existUser;
-
-    const result = { ...decoded, userId };
-
-    req.user = result;
+  
+    delete existUser.password;
+    req.user = existUser;
 
     next();
   } catch (err) {

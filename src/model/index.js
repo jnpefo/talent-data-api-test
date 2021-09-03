@@ -33,6 +33,15 @@ const readUsers = () => {
     .then((data) => JSON.parse(data));
 };
 
+const readOrganzation = (role) => {
+  // const organization = [];
+  return fs.readFile('./fixtures/organization.json', 'utf-8')
+    .then((data) => {
+      const result = JSON.parse(data);
+      console.log(result);
+      return result;
+    });
+};
 const findOneEmail = async (email) => {
   const data = await readUsers();
   const result = data.filter((value) => value.email === email);
@@ -43,4 +52,5 @@ const findOneEmail = async (email) => {
 module.exports = {
   findOneEmail,
   getProctudModel,
+  readOrganzation,
 };

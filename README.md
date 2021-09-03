@@ -12,6 +12,8 @@ Pontos: Gostei de aprender stream, pois não sabia.
 
 Fiz toda a parte de login, com a entrega do JWT, ao fazer o GET, ainda estou implementando, pois ainda tenho problemas com o Stream. Mas ao ver o console.log, mostra que guarda, falta retornar.
 
+Obs.: Ao ver o README.md do projeto tem um erro de escrita "paara", no primeiro paragrafo do "Caso".
+
 
 # ST IT Cloud - Development Test LV. 3
 

@@ -10,7 +10,8 @@ const loginUser = rescue(async (req, res, next) => {
 
 const getProctud = rescue(async (req, res, _next) => {
   const { organizationName } = req.params;
-  const result = await getProctudServices(organizationName);
+  const { user } = req;
+  const result = await getProctudServices(organizationName, user.roles[0]);
   res.status(200).json(result);
 });
 

@@ -30,11 +30,26 @@ const loginServices = async (data) => {
   return token;
 };
 
-const getProctudServices = async (name) => {
+const getLevel = (role) => {
+  const roles = {
+    junior: 2,
+    middle: [1, 2],
+    senior: [0, 1, 2],
+    intern: [0, 1, 2],
+  };
+
+  return roles[role];
+};
+
+const getProctudServices = async (name, role) => {
+  // const level = getLevel(role);
+  // readOrganzation
+
   if (name.startsWith('STUFF')){
     console.log('STUFF');
   } else {
-    const result = await getProctudModel(name);
+    
+    const result = await getProctudModel(name, role);
     return result;
   }
 };
