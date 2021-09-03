@@ -1,17 +1,36 @@
 const fs = require('fs').promises;
-const path = require('path');
+const { once } = require('events');
+const { createReadStream } = require('fs');
+const { createInterface } = require('readline');
 
-// const readProducts = () => {
-//   return fs.readFile('../../fixtures/products.txt', 'utf-8')
-//     .then((data) => JSON.parse(data));
-// };
+const getProctudModel = (name) => {
+  const products = [];
+  let count = 0;
+  (async function processLineByLine() {
+    try {
+      const rl = createInterface({
+        input: createReadStream('./fixtures/teste.txt'),
+        crlfDelay: Infinity
+      });
 
-// const getOrganizationName = async() => {
-//   const data = await readProducts();
-//   console.log(data);
-// };
-
-// getOrganizationName();
+      rl.on('line', (line) => {
+        const a = JSON.parse(line);
+        if (a.department === name){
+          count += 1;
+          products.push(a);
+          // console.log(products);
+        };
+      });
+      
+      await once(rl, 'close');
+      
+    } catch (err) {
+      console.error(err);
+    }
+  })();
+  // console.log(products);
+  return { 'total': count, products };
+};
 
 const readUsers = () => {
   return fs.readFile('./fixtures/users.json', 'utf-8')
@@ -25,8 +44,7 @@ const findOneEmail = async (email) => {
   return result;
 };
 
-console.log(findOneEmail('junior.salesrep@stit.talent'));
-
 module.exports = {
   findOneEmail,
+  getProctudModel,
 };

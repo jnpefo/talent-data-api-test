@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const { loginServices } = require('../service');
+const { loginServices, getProctudServices } = require('../service');
 
 const loginUser = rescue(async (req, res, next) => {
   const { email, password } = req.body;
@@ -8,8 +8,11 @@ const loginUser = rescue(async (req, res, next) => {
   res.status(200).json({ token:`Bearer ${token}` });
 });
 
-const getProctud = rescue(async (_req, res, _next) => {
-  res.status(200).json('Tudo ok');
+const getProctud = rescue(async (req, res, _next) => {
+  const { organizationName } = req.params;
+  const result = await getProctudServices(organizationName);
+  console.log(result);
+  res.status(200).json(result);
 });
 
 module.exports = {

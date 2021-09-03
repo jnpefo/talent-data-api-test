@@ -1,3 +1,18 @@
+Esse é um teste técnico que recebi da STIT, onde teve a proposta de fezer uma API e publicar, segue o link da API na Herouku:
+
+https://talent-data-api-test-jnpefo.herokuapp.com/
+
+Tem como rota login e products/organizationName
+
+Rodar local: Ao baixar rodar o npm install e rodar com npm start.
+
+Dificuldades: Não consegui compreender muito bem como fazer o relacionamento entre os perfils.
+
+Pontos: Gostei de aprender stream, pois não sabia.
+
+Fiz toda a parte de login, com a entrega do JWT, ao fazer o GET, ainda estou implementando, pois ainda tenho problemas com o Stream. Mas ao ver o console.log, mostra que guarda, falta retornar.
+
+
 # ST IT Cloud - Development Test LV. 3
 
 ## Objetivo

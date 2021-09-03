@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { findOneEmail } = require('../model');
+const { findOneEmail, getProctudModel } = require('../model');
 const validLogin = require('./validator');
 
 const jwtConfig = {
@@ -30,6 +30,16 @@ const loginServices = async (data) => {
   return token;
 };
 
+const getProctudServices = async (name) => {
+  if (name.startsWith('STUFF')){
+    console.log('STUFF');
+  } else {
+    const result = await getProctudModel(name);
+    return result;
+  }
+};
+
 module.exports = {
   loginServices,
+  getProctudServices,
 };
