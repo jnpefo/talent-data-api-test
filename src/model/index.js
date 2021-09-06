@@ -33,15 +33,18 @@ const readUsers = () => {
     .then((data) => JSON.parse(data));
 };
 
-const readOrganzation = (role) => {
-  // const organization = [];
+const readOrganzation = () => {
   return fs.readFile('./fixtures/organization.json', 'utf-8')
-    .then((data) => {
-      const result = JSON.parse(data);
-      console.log(result);
-      return result;
-    });
+    .then((data) => JSON.parse(data));
 };
+
+const filterOrganization = async (organization) => {
+  const organizationFilter = [];
+  const data = await readOrganzation();
+  organizationFilter.push(data.filter((value) => value.name.includes(organization)));
+  console.log('model', organizationFilter);
+};
+
 const findOneEmail = async (email) => {
   const data = await readUsers();
   const result = data.filter((value) => value.email === email);
@@ -52,5 +55,5 @@ const findOneEmail = async (email) => {
 module.exports = {
   findOneEmail,
   getProctudModel,
-  readOrganzation,
+  filterOrganization,
 };

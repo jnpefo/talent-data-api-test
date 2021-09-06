@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { findOneEmail, getProctudModel } = require('../model');
+const { findOneEmail, getProctudModel, filterOrganization } = require('../model');
 const validLogin = require('./validator');
 
 const jwtConfig = {
@@ -35,23 +35,22 @@ const getLevel = (role) => {
     junior: 2,
     middle: [1, 2],
     senior: [0, 1, 2],
-    intern: [0, 1, 2],
+    intern: [0, 1, 2, 'STUFF A'],
   };
 
   return roles[role];
 };
 
-const getProctudServices = async (name, role) => {
-  // const level = getLevel(role);
-  // readOrganzation
-
-  if (name.startsWith('STUFF')){
-    console.log('STUFF');
-  } else {
-    
-    const result = await getProctudModel(name, role);
-    return result;
-  }
+const getProctudServices = async (organization, role) => {
+  const level = getLevel(role);
+  const departments = await filterOrganization(organization, level);
+  // if (organization.startsWith('STUFF')){
+  //   const resultStuff = await getProctudModel(organization, level);
+  //   return resultStuff;
+  // } else {
+  //   const resultName = await getProctudModel(organization, level);
+  //   return resultName;
+  // }
 };
 
 module.exports = {

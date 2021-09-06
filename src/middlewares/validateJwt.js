@@ -21,7 +21,7 @@ const validateJwt = async (req, res, next) => {
     if (!existUser) return res.status( 400).json({ message: msg });
   
     delete existUser.password;
-    req.user = existUser;
+    req.user = existUser.roles[0];
 
     next();
   } catch (err) {
