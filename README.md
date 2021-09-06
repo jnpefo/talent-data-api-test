@@ -16,6 +16,8 @@ Não implementando: Filtro tags, testes unitários, testes integrados.
 
 Obs.: Ao ver o README.md do projeto tem um erro de escrita "paara", no primeiro paragrafo do "Caso".
 
+A baixo tem o README.md original:
+
 
 # ST IT Cloud - Development Test LV. 3
 
