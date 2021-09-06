@@ -2,7 +2,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const {
   findOneEmail,
-  getProctudModel,
+  getProductModel,
   filterOrganization,
   filterStuffOrganization,
 } = require('../model');
@@ -46,29 +46,46 @@ const getLevel = (role) => {
   return roles[role];
 };
 
-const getProctudServices = async (organization, role) => {
+const filterStuff = async (organization, level) => {
+  let resultStuff = await filterStuffOrganization(organization, level);
+  if (resultStuff[0].name.startsWith('STUFF')) {
+    const newSTUFF = [];
+    for (i = 0; i < resultStuff.length; i++) {  
+      const result = await filterStuffOrganization(resultStuff[i].name, level);
+      newSTUFF.push(result);
+    };
+    const newArray = [];
+    for (i = 0; i < newSTUFF.length; i++) {
+      for (j = 0; j < newSTUFF[i].length; j++) {
+        newArray.push(newSTUFF[i][j]);
+      };
+    };
+    resultStuff = newArray;
+  };
+
+  const newObj = { total: 0, products: [] };
+  for (i = 0; i < resultStuff.length; i++) {
+    const result = await getProductModel(resultStuff[i].name);
+    newObj.total = (newObj.total + result.total),
+    newObj.products.push(result.products);
+  };
+  return newObj;
+};
+const getProductServices = async (organization, role) => {
   const level = getLevel(role);
   const departments = await filterOrganization(organization, level);
-
   if (departments.length === 0) return { status: 400, message: 'access is not allowed'};
-
+  
   if (departments[0].name.startsWith('STUFF')){
-    const resultStuff = await filterStuffOrganization(organization, level);
-    const newObj = { total: 0, products: [] };
-
-    for (i = 0; i < resultStuff.length; i++){
-      const result = await getProctudModel(resultStuff[i].name);
-      newObj.total = (newObj.total + result.total),
-      newObj.products.push(result.products);
-    }
-    return newObj;
+    const resultName = await filterStuff(organization, level);
+    return resultName;
   } else {
-    const resultName = await getProctudModel(organization);
+    const resultName = await getProductModel(organization);
     return resultName;
   }
 };
 
 module.exports = {
   loginServices,
-  getProctudServices,
+  getProductServices,
 };

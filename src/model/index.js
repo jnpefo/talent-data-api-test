@@ -3,7 +3,7 @@ const { once } = require('events');
 const { createReadStream } = require('fs');
 const { createInterface } = require('readline');
 
-const getProctudModel = async (name) => {
+const getProductModel = async (name) => {
   const products = [];
   let count = 0;
   try {
@@ -58,7 +58,7 @@ const findOneEmail = async (email) => {
 
 module.exports = {
   findOneEmail,
-  getProctudModel,
+  getProductModel,
   filterOrganization,
   filterStuffOrganization,
 };
