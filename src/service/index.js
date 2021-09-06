@@ -1,6 +1,11 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { findOneEmail, getProctudModel, filterOrganization } = require('../model');
+const {
+  findOneEmail,
+  getProctudModel,
+  filterOrganization,
+  filterStuffOrganization,
+} = require('../model');
 const validLogin = require('./validator');
 
 const jwtConfig = {
@@ -32,7 +37,7 @@ const loginServices = async (data) => {
 
 const getLevel = (role) => {
   const roles = {
-    junior: 2,
+    junior: [2],
     middle: [1, 2],
     senior: [0, 1, 2],
     intern: [0, 1, 2, 'STUFF A'],
@@ -44,13 +49,23 @@ const getLevel = (role) => {
 const getProctudServices = async (organization, role) => {
   const level = getLevel(role);
   const departments = await filterOrganization(organization, level);
-  // if (organization.startsWith('STUFF')){
-  //   const resultStuff = await getProctudModel(organization, level);
-  //   return resultStuff;
-  // } else {
-  //   const resultName = await getProctudModel(organization, level);
-  //   return resultName;
-  // }
+
+  if (departments.length === 0) return { status: 400, message: 'access is not allowed'};
+
+  if (departments[0].name.startsWith('STUFF')){
+    const resultStuff = await filterStuffOrganization(organization, level);
+    const newObj = { total: 0, products: [] };
+
+    for (i = 0; i < resultStuff.length; i++){
+      const result = await getProctudModel(resultStuff[i].name);
+      newObj.total = (newObj.total + result.total),
+      newObj.products.push(result.products);
+    }
+    return newObj;
+  } else {
+    const resultName = await getProctudModel(organization);
+    return resultName;
+  }
 };
 
 module.exports = {

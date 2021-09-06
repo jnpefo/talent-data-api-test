@@ -38,11 +38,15 @@ const readOrganzation = () => {
     .then((data) => JSON.parse(data));
 };
 
-const filterOrganization = async (organization) => {
-  const organizationFilter = [];
+const filterOrganization = async (organization, level) => {
   const data = await readOrganzation();
-  organizationFilter.push(data.filter((value) => value.name.includes(organization)));
-  console.log('model', organizationFilter);
+  return data.filter((value) => value.name.includes(organization))
+    .filter((value) =>  level.includes(value.level));
+};
+
+const filterStuffOrganization = async (organization) => {
+  const data = await readOrganzation();
+  return data.filter((value) => value.parent === organization);
 };
 
 const findOneEmail = async (email) => {
@@ -56,4 +60,5 @@ module.exports = {
   findOneEmail,
   getProctudModel,
   filterOrganization,
+  filterStuffOrganization,
 };

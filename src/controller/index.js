@@ -8,10 +8,11 @@ const loginUser = rescue(async (req, res, next) => {
   res.status(200).json({ token:`Bearer ${token}` });
 });
 
-const getProctud = rescue(async (req, res, _next) => {
+const getProctud = rescue(async (req, res, next) => {
   const { organizationName } = req.params;
   const { user } = req;
   const result = await getProctudServices(organizationName, user);
+  if (result.status) return next(result);
   res.status(200).json(result);
 });
 
